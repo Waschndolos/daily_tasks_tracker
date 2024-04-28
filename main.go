@@ -1,23 +1,16 @@
-package daily_tasks_tracker
-
-import (
-	"log"
-	"time"
-)
-
 package main
 
 import (
-"fmt"
-"log"
-"time"
+	influxdb2 "github.com/influxdata/influxdb-client-go/v2"
+	"log"
+	"time"
 
-"github.com/influxdata/influxdb-client-go/v2"
-"github.com/influxdata/influxdb-client-go/v2/api"
-"fyne.io/fyne/v2/app"
-"fyne.io/fyne/v2/container"
-"fyne.io/fyne/v2/layout"
-"fyne.io/fyne/v2/widget"
+	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/app"
+	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
+	"fyne.io/fyne/v2/widget"
+	_ "github.com/influxdata/influxdb-client-go/v2/api"
 )
 
 func main() {
@@ -28,10 +21,10 @@ func main() {
 	myWindow := myApp.NewWindow("Task Logger")
 
 	// InfluxDB Konfiguration
-	influxDBURL := "http://localhost:8086" // Setze die URL deiner InfluxDB
-	influxDBToken := "your-influxdb-token"  // Setze deinen InfluxDB Token
-	influxDBOrg := "your-influxdb-org"      // Setze deine InfluxDB Organisation
-	influxDBBucket := "your-influxdb-bucket"// Setze deinen InfluxDB Bucket
+	influxDBURL := "http://localhost:8086"   // Setze die URL deiner InfluxDB
+	influxDBToken := "your-influxdb-token"   // Setze deinen InfluxDB Token
+	influxDBOrg := "your-influxdb-org"       // Setze deine InfluxDB Organisation
+	influxDBBucket := "your-influxdb-bucket" // Setze deinen InfluxDB Bucket
 
 	// Input-Feld für den Task
 	taskEntry := widget.NewEntry()
@@ -58,7 +51,7 @@ func main() {
 		submitButton,
 	)
 
-	myWindow.SetContent(container.New(layout.CenterLayout, content))
+	myWindow.SetContent(container.New(layout.NewCenterLayout(), content))
 	myWindow.Resize(fyne.NewSize(300, 150))
 	myWindow.ShowAndRun()
 }
@@ -74,10 +67,10 @@ func writeToInfluxDB(task, url, token, org, bucket string) {
 
 	// Datenpunkt erstellen
 	p := influxdb2.NewPoint(
-		"tasks",                   // Measurement
-		map[string]string{},      // Tags
+		"tasks",                              // Measurement
+		map[string]string{},                  // Tags
 		map[string]interface{}{"task": task}, // Felder
-		time.Now(),                // Zeitstempel
+		time.Now(),                           // Zeitstempel
 	)
 
 	// Datenpunkt in die InfluxDB schreiben
@@ -85,4 +78,3 @@ func writeToInfluxDB(task, url, token, org, bucket string) {
 	// Flushen, um sicherzustellen, dass alle Daten geschrieben werden
 	writeAPI.Flush()
 }
-
