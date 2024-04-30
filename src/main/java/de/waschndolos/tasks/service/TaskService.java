@@ -20,26 +20,30 @@ public class TaskService {
     private static final String MEASUREMENT_NAME = "task_switch";
 
     private final InfluxDBClient client;
+    private final EncryptionService encryptionService;
 
-    public TaskService(InfluxConfig influxConfig) {
+    public TaskService(InfluxConfig influxConfig, EncryptionService encryptionService) {
         this.client = InfluxDBClientFactory.create(influxConfig.getUrl(), influxConfig.getToken().toCharArray(), influxConfig.getOrg(), influxConfig.getBucket());
+        this.encryptionService = encryptionService;
     }
 
     public void save(Task task) {
-        String taskName = task.getName();
-        writeToInflux("taskName", taskName);
+        writeToInflux(task);
     }
 
-    public void writeToInflux(String field, String value) {
+    public void writeToInflux(Task task) {
         try {
+            String taskName = task.getName();
             Point point = Point.measurement(MEASUREMENT_NAME)
-                    .addField(field, value)
+                    .addField("taskName", taskName)
+                    .addField("isHomeOffice", task.isHomeOffice())
+                    .addField("identifier", encryptionService.getEncryptedIdentifier())
                     .time(System.currentTimeMillis(), WritePrecision.MS);
 
             client.getWriteApiBlocking().writePoint(point);
-            LOGGER.info("Write successful. field={}, value={}", field, value);
+            LOGGER.info("Write successful");
         } catch (Exception e) {
-            LOGGER.error("Failed to write Measurement. field={}, value={}", field, value, e);
+            LOGGER.error("Failed to write Measurement.", e);
             throw e;
         }
     }

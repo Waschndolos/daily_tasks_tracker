@@ -20,16 +20,14 @@ public class TaskController {
     }
 
     @PostMapping("/submit")
-    public String submitTask(@RequestParam("taskName") String taskName, Model model, RedirectAttributes redirectAttributes) {
-
+    public String submitTask(@RequestParam("taskName") String taskName, @RequestParam("isHomeOffice") boolean isHomeOffice, Model model, RedirectAttributes redirectAttributes) {
         try {
-            taskService.save(new Task(taskName));
+            model.addAttribute("isHomeOffice", isHomeOffice);
+            taskService.save(new Task(taskName, isHomeOffice));
             redirectAttributes.addFlashAttribute("success", "Successfully saved.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("fail", "Error while saving datapoint.");
         }
-
         return "redirect:/";
     }
-
 }
