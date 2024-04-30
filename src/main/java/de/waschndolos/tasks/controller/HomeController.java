@@ -1,6 +1,5 @@
 package de.waschndolos.tasks.controller;
 
-import de.waschndolos.tasks.model.Focus;
 import de.waschndolos.tasks.model.Interruption;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -23,11 +22,6 @@ public class HomeController {
         Interruption[] interruptions = Interruption.values();
         Arrays.sort(interruptions, Comparator.comparing(Enum::name));
         model.addAttribute("interruptions", interruptions);
-
-        Focus[] focus = Focus.values();
-        Arrays.sort(focus, Comparator.comparing(Focus::name));
-
-        model.addAttribute("focus", focus);
         return "home";
     }
 }

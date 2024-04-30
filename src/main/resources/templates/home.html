@@ -30,23 +30,6 @@
         </div>
         <div class="form-group row">
             <div class="row">
-                <div class="col-md-6 mb-6">
-                    <th:block th:each="focus, iterStat : ${focus}">
-                        <div class="col-md-3 mb-3">
-                            <button type="submit"  th:name="actionId" th:value="0"
-                                    class="btn btn-block"
-                                    th:classappend="${focus.buttonClass}">
-                                <i th:class="${'fas ' + focus.iconClass}"></i>
-                                <span th:text="${#strings.replace(focus.name(), '_', ' ')}"></span>
-                            </button>
-                        </div>
-                        <th:block th:if="${iterStat.count % 4 == 0 and not iterStat.last}">
-                            <div class="row"></div>
-                        </th:block>
-                    </th:block>
-                </div>
-            </div>
-            <div class="row">
                 <th:block th:each="interruption, iterStat : ${interruptions}">
                     <div class="col-md-3 mb-3">
                         <button type="submit" th:name="actionId"
