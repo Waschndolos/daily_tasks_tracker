@@ -2,8 +2,6 @@ package de.waschndolos.tasks.service;
 
 import com.influxdb.client.InfluxDBClient;
 import com.influxdb.client.InfluxDBClientFactory;
-import com.influxdb.client.WriteApi;
-import com.influxdb.client.WriteOptions;
 import com.influxdb.client.domain.WritePrecision;
 import com.influxdb.client.write.Point;
 import de.waschndolos.tasks.config.InfluxConfig;
