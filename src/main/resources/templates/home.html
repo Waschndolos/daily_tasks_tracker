@@ -7,40 +7,71 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
 </head>
 <body>
 <div class="container">
     <h1>Welcome to <span th:text="${appName}">Our App</span></h1>
 
-    <form action="/tasks/submit" method="post">
+    <h4>Getting interrupted all the time? <br>Cannot focus on your tasks? <br>Track your interruptions here to improve
+        focus</h4>
+
+    <form action="/interruptions/buttonClicked" method="post">
         <div class="form-group row">
             <div class="col-sm-12">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="isHomeOffice" name="isHomeOffice" value="true">
-                    <label class="form-check-label" for="isHomeOffice">Is Homeoffice?</label>
+                    <input class="form-check-input" type="checkbox" id="isHomeOffice" name="isHomeOffice"
+                           value="true" th:checked="${isHomeOffice}">
+                    <label class="form-check-label" for="isHomeOffice">Are you in the Home office?</label>
                 </div>
                 <input type="hidden" name="isHomeOffice" value="false">
             </div>
         </div>
-
         <div class="form-group row">
-            <div class="col-sm-12">
-                <label for="taskName">Task Name</label>
-                <input class="form-control" id="taskName" type="text" name="taskName" aria-describedby="taskNameHelp">
-                <small id="taskNameHelp" class="form-text text-muted">Specify to which task you switched</small>
+            <div class="row">
+                <div class="col-md-6 mb-6">
+                    <th:block th:each="focus, iterStat : ${focus}">
+                        <div class="col-md-3 mb-3">
+                            <button type="submit"  th:name="actionId" th:value="0"
+                                    class="btn btn-block"
+                                    th:classappend="${focus.buttonClass}">
+                                <i th:class="${'fas ' + focus.iconClass}"></i>
+                                <span th:text="${#strings.replace(focus.name(), '_', ' ')}"></span>
+                            </button>
+                        </div>
+                        <th:block th:if="${iterStat.count % 4 == 0 and not iterStat.last}">
+                            <div class="row"></div>
+                        </th:block>
+                    </th:block>
+                </div>
+            </div>
+            <div class="row">
+                <th:block th:each="interruption, iterStat : ${interruptions}">
+                    <div class="col-md-3 mb-3">
+                        <button type="submit" th:name="actionId"
+                                th:value="${interruption.id}" class="btn btn-block"
+                                th:classappend="${interruption.buttonClass}">
+                            <i th:class="${'fas ' + interruption.iconClass}"></i>
+                            <span th:text="${#strings.replace(interruption.name(), '_', ' ')}"></span>
+                        </button>
+                    </div>
+                    <th:block th:if="${iterStat.count % 4 == 0 and not iterStat.last}">
+                        <div class="row"></div>
+                    </th:block>
+                </th:block>
             </div>
         </div>
 
-        <button type="submit">Send</button>
     </form>
     <footer>
-        <div class="alert alert-primary" role="alert" th:text="${success}" th:if="${success}" id="success"></div>
+        <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}" id="success"></div>
         <div class="alert alert-danger" role="alert" th:text="${fail}" th:if="${fail}" id="fail"></div>
     </footer>
 </div>
 <script>
-    window.onload = function() {
-        setTimeout(function() {
+    window.onload = function () {
+        setTimeout(function () {
             var successAlert = document.getElementById('success');
             var failAlert = document.getElementById('fail');
             if (successAlert) {

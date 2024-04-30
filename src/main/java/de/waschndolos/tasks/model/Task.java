@@ -2,17 +2,17 @@ package de.waschndolos.tasks.model;
 
 public class Task {
 
-    private final String name;
+    private final int value;
 
     private final boolean isHomeOffice;
 
-    public Task(String name, boolean isHomeOffice) {
-        this.name = name;
+    public Task(int value, boolean isHomeOffice) {
+        this.value = value;
         this.isHomeOffice = isHomeOffice;
     }
 
-    public String getName() {
-        return name;
+    public int getValue() {
+        return value;
     }
 
     public boolean isHomeOffice() {
