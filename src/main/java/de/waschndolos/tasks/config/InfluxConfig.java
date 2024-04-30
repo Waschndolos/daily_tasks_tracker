@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 public class InfluxConfig {
 
     private String url;
-    private String user;
     private String token;
     private String bucket;
     private String org;
@@ -21,13 +20,6 @@ public class InfluxConfig {
         this.url = url;
     }
 
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
 
     public String getToken() {
         return token;

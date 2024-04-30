@@ -26,14 +26,14 @@ public class TaskService {
         this.encryptionService = encryptionService;
     }
 
-    public void save(Task task) {
+    public void save(String identifier, Task task) {
         try {
             int value = task.getValue();
             Point point = Point.measurement(MEASUREMENT_NAME)
                     .addField("id", value)
                     .addTag("task_name", Interruption.getById(value).toString())
                     .addTag("is_home_office", String.valueOf(task.isHomeOffice()))
-                    .addTag("identifier", encryptionService.getEncryptedIdentifier())
+                    .addTag("identifier", identifier)
                     .time(System.currentTimeMillis(), WritePrecision.MS);
 
             client.getWriteApiBlocking().writePoint(point);

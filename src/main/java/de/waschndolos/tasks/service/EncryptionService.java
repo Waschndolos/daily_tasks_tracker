@@ -11,12 +11,11 @@ public class EncryptionService {
 
     private static final String SALT_STR = "adlsfokjaogtiltnq034p983hn89tgowöäonspy80ü9z4üthg";
 
-    public String getEncryptedIdentifier() {
-        String username = System.getProperty("user.name");
-        return hashUsername(username, SALT_STR.getBytes(StandardCharsets.UTF_8));
+    public String encrypt(String clientIp) {
+        return hash(clientIp, SALT_STR.getBytes(StandardCharsets.UTF_8));
     }
 
-    private static String hashUsername(String username, byte[] salt) {
+    private static String hash(String username, byte[] salt) {
         PKCS5S2ParametersGenerator generator = new PKCS5S2ParametersGenerator(new SHA256Digest());
         generator.init(username.getBytes(StandardCharsets.UTF_8), salt, 1000);
         byte[] hash = ((KeyParameter) generator.generateDerivedParameters(256)).getKey();
@@ -32,4 +31,5 @@ public class EncryptionService {
         }
         return hexString.toString();
     }
+
 }

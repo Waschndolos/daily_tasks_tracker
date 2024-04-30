@@ -16,6 +16,7 @@
 
     <h4>Getting interrupted all the time? <br>Cannot focus on your tasks? <br>Track your interruptions here to improve
         focus</h4>
+    <br><br>
 
     <form action="/interruptions/buttonClicked" method="post">
         <div class="form-group row">
@@ -48,6 +49,7 @@
 
     </form>
     <footer>
+        <span>Your identifier is: <span th:text="${identifier}"></span></span>
         <div class="alert alert-success" role="alert" th:text="${success}" th:if="${success}" id="success"></div>
         <div class="alert alert-danger" role="alert" th:text="${fail}" th:if="${fail}" id="fail"></div>
     </footer>
