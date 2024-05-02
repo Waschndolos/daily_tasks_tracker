@@ -7,7 +7,7 @@ public enum Interruption {
     EMAIL(2, "btn-secondary", "fa-envelope"),
     MESSAGE(3, "btn-success", "fa-comments"),
     MEETING(4, "btn-info", "fa-users"),
-    HELP_COLLEGE(5, "btn-warning", "fa-user-shield"),
+    HELP_COLLEAGUE(5, "btn-warning", "fa-user-shield"),
     EMERGENCY(6, "btn-danger", "fa-exclamation-triangle"),
     QUICKFIX(7, "btn-light", "fa-wrench"),
     PLAY_RUBBER_DUCK(8, "btn-dark", "fa-play-circle"),
