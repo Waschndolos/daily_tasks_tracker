@@ -12,18 +12,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskService {
+public class InterruptionService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TaskService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InterruptionService.class);
 
     private static final String MEASUREMENT_NAME = "task_switch";
 
     private final InfluxDBClient client;
-    private final EncryptionService encryptionService;
 
-    public TaskService(InfluxConfig influxConfig, EncryptionService encryptionService) {
+    public InterruptionService(InfluxConfig influxConfig) {
         this.client = InfluxDBClientFactory.create(influxConfig.getUrl(), influxConfig.getToken().toCharArray(), influxConfig.getOrg(), influxConfig.getBucket());
-        this.encryptionService = encryptionService;
     }
 
     public void save(String identifier, Task task) {
