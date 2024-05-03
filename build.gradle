@@ -21,7 +21,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-configuration-processor'
     implementation 'com.influxdb:influxdb-client-java:7.0.0'
-    implementation 'org.bouncycastle:bcprov-jdk15on:1.68'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
